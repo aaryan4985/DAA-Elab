@@ -1,0 +1,40 @@
+#include<bits/stdc++.h> 
+using namespace std;
+const int N=2e3+5,M=1e5+5;
+int
+n,k,s,t,l[N],r[N],len[N],p[N],m,a[N],cnt=1,hd[N],to[M],nxt[M],c[M],w[M],d[N],mn[N],id[N],pre[N];
+bool v[N];
+queue<int>q;
+void add(int x,int y,int z,int k){
+ to[++cnt]=y,nxt[cnt]=hd[x],hd[x]=cnt,c[cnt]=z,w[cnt]=-k;
+ to[++cnt]=x,nxt[cnt]=hd[y],hd[y]=cnt,c[cnt]=0,w[cnt]=k;
+}
+bool spfa(){
+ for(int i=0;i<=t;i++) d[i]=1e9,v[i]=0;
+ q.push(s),d[s]=0,v[s]=1,mn[s]=1e9;
+ while(q.size()){
+ int x=q.front(),y;v[x]=0,q.pop();
+ for(int i=hd[x];i;i=nxt[i])
+ if(c[i]&&d[y=to[i]]>d[x]+w[i]){
+ d[y]=d[x]+w[i],pre[y]=x,id[y]=i,mn[y]=min(mn[x],c[i]);
+ if(!v[y]) v[y]=1,q.push(y);
+ }
+ }
+ if(d[t]==1e9) return 0;
+ for(int i=t;i!=s;i=pre[i]) c[id[i]]-=mn[t],c[id[i]^1]+=mn[t];
+ return 1;
+}
+signed main(){
+ scanf("%d%d",&n,&k);
+ for(int i=1;i<=n;i++)
+ scanf("%d%d%d",&l[i],&r[i],&len[i]),r[i]=l[i]+r[i],a[++m]=l[i],a[++m]=r[i];
+ sort(a+1,a+1+m),m=unique(a+1,a+1+m)-a-1,s=0,t=m+1; 
+ for(int i=0;i<=m;i++) add(i,i+1,k,0);
+ for(int i=1;i<=n;i++){
+ l[i]=lower_bound(a+1,a+1+m,l[i])-a,r[i]=lower_bound(a+1,a+1+m,r[i])-a;
+ add(l[i],r[i],1,len[i]),p[i]=cnt;
+ }
+ while(spfa());
+ for(int i=1;i<=n;i++) printf("%d ",c[p[i]]?1:0);
+ return 0;
+}
