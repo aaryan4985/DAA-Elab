@@ -1,0 +1,47 @@
+#include <stdio.h>
+ 
+#define MAX_N 100
+#define MAX_M 100
+ 
+int A[MAX_N][MAX_M], dp[MAX_N][MAX_M];
+int N, M;
+int dx[2] = {1, 0};
+int dy[2] = {0, 1};
+int dfs(int x, int y) {
+    if (dp[x][y] != -1) return dp[x][y];
+ 
+    int maxPath = 1; 
+    
+    for (int dir = 0; dir < 2; dir++) {
+        int nx = x + dx[dir], ny = y + dy[dir];
+        if (nx < N && ny < M && A[nx][ny] > A[x][y]) {
+            maxPath = (maxPath > 1 + dfs(nx, ny)) ? maxPath : (1 + dfs(nx, ny));
+        }
+    }
+    
+    return dp[x][y] = maxPath;
+}
+ 
+void solve() {
+    scanf("%d %d", &N, &M);
+    
+    for (int i = 0; i < N; i++) {
+        for (int j = 0; j < M; j++) {
+            scanf("%d", &A[i][j]);
+            dp[i][j] = -1;
+        }
+    }
+ 
+    printf("%d\n", dfs(0, 0)); 
+}
+ 
+int main() {
+    int t;
+    scanf("%d", &t);
+ 
+    while(t--) {
+        solve();
+    }
+ 
+    return 0;
+}

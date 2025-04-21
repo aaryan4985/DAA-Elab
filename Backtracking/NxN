@@ -1,0 +1,40 @@
+#include <bits/stdc++.h>
+using namespace std;
+#define N 21
+
+// Function to check if there's a path from (i, j) to the destination (where a[i][j] == 2)
+int check(int i, int j, int n, int a[N][N]) {
+    // Boundary conditions and base case
+    if (i < 0 || j < 0 || i >= n || j >= n || a[i][j] == 0)
+        return 0;
+    if (a[i][j] == 2)
+        return 1;
+
+    // Mark the cell as visited
+    a[i][j] = 0;
+
+    // Recursively check all four directions (right, left, up, down)
+    return check(i, j + 1, n, a) || check(i, j - 1, n, a) || check(i - 1, j, n, a) || check(i + 1, j, n, a);
+}
+
+int main() {
+    int t;
+    cin >> t;  // Read the number of test cases
+    while(t--) {
+        int n, x, y;
+        cin >> n;  // Size of the grid
+        int a[N][N];  // The grid
+        for (int i = 0; i < n; ++i) {
+            for (int j = 0; j < n; ++j) {
+                cin >> a[i][j];  // Read the grid values
+                if (a[i][j] == 1) {
+                    x = i;
+                    y = j;  // Store the coordinates of the start point
+                }
+            }
+        }
+        // Output 1 if there's a path to the destination, 0 otherwise
+        cout << check(x, y, n, a) << endl;
+    }
+    return 0;
+}
