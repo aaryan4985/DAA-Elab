@@ -1,0 +1,23 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+ int t;
+ cin>>t;
+ while(t--){
+ long long n,a,b;
+ cin>>n>>a>>b;
+ int x=min(a,b);
+ int y=max(a,b);
+ long i=n-1;
+ long j=0;
+ for(int k=0;k<n;k++){
+ cout<<x*i+y*j<<" ";
+ i--;
+ j++;
+ }
+ cout<<"\n";
+ }
+return 0;
+ cout<<" n=(int *)malloc(t*sizeof(int));ans=(int * *)malloc(t*sizeof(int *)); ";
+}

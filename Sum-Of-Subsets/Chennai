@@ -1,0 +1,15 @@
+#include<bits/stdc++.h>
+using namespace std;
+void for_(){}
+int main()
+{
+ float t,n,ls,as;
+ cin>>t;
+ while(t--){
+     cin>>n>>ls>>as;
+ float x=as*ceil(n/4),y=ls*ceil(n/100);
+ if(x<y) cout<<x<<endl;
+ else if(n>100) cout<<ceil((n-100)/4)*as+ls<<endl;
+ else cout<<y<<endl;
+ }
+ }
